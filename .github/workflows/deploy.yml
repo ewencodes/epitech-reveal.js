@@ -59,7 +59,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn ci
+          yarn
 
       - name: Build
         run: |
