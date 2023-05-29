@@ -57,7 +57,7 @@ jobs:
           print(f'Updated package.json version to: {new_version}')
           EOF
         env:
-          NEW_VERSION: ${{ steps.gitversion.outputs.semVer }}
+          NEW_VERSION: ${{ steps.gitversion.outputs.fullSemVer }}
 
       - name: Update Package Version for main
         if: github.ref == 'refs/heads/main'
