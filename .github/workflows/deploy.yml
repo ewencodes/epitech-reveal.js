@@ -1,0 +1,65 @@
+name: Deploy NPM Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+    
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+        id: gitversion
+        with:
+          useConfigFile: true
+          configFilePath: .gitversion.yml
+
+      - name: Update Package Version
+        run: |
+          python3 - <<EOF
+          import os
+          import json
+
+          # Get the desired version from the environment variable
+          new_version = os.environ.get('NEW_VERSION')
+
+          # Read the package.json file
+          with open('package.json', 'rw') as package_file:
+              package_data = json.load(package_file)
+              package_data['version'] = new_version
+              json.dump(package_data, package_file, indent=2)
+
+          print(f'Updated package.json version to: {new_version}')
+          EOF
+        env:
+          NEW_VERSION: ${{ steps.gitversion.outputs.semVer }}
+
+      - name: Install dependencies
+        run: |
+          yarn ci
+
+      - name: Build
+        run: |
+          yarn build
+
+      - name: Publish to npm
+        run: |
+          yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
