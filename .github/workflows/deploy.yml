@@ -43,9 +43,13 @@ jobs:
           new_version = os.environ.get('NEW_VERSION')
 
           # Read the package.json file
-          with open('package.json', 'rw') as package_file:
+          with open('package.json', 'r') as package_file:
               package_data = json.load(package_file)
-              package_data['version'] = new_version
+
+          package_data['version'] = new_version
+          
+          # Write files
+          with open('package.json', 'w') as package_file:
               json.dump(package_data, package_file, indent=2)
 
           print(f'Updated package.json version to: {new_version}')
