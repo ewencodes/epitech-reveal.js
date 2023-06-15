@@ -1,0 +1,57 @@
+mode: ContinuousDeployment
+major-version-bump-message: "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?(!:|:.*\\n\\n((.+\\n)+\\n)?BREAKING CHANGE:\\s.+)"
+minor-version-bump-message: "^(feat)(\\([\\w\\s-]*\\))?:"
+patch-version-bump-message: "^(build|chore|ci|docs|fix|perf|refactor|revert|style|test)(\\([\\w\\s-]*\\))?:"
+next-version: 0.0.1
+branches:
+  main:
+    regex: ^master$|^main$
+    mode: ContinuousDelivery
+    tag: ''
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    source-branches: [ 'feature', 'hotfix', 'bugfix' ]
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: true
+    pre-release-weight: 55000
+  feature:
+    regex: ^feature(s)?[/-]
+    mode: ContinuousDelivery
+    tag: useBranchName
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    source-branches: [ 'main', 'release', 'feature', 'hotfix' ]
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+    pre-release-weight: 30000
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+    mode: ContinuousDelivery
+    tag: useBranchName
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    source-branches: [ 'main' ]
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+    pre-release-weight: 30000
+  bugfix:
+    regex: ^bugfix(es)?[/-]
+    mode: ContinuousDelivery
+    tag: useBranchName
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    source-branches: [ 'main' ]
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+    pre-release-weight: 30000
+ignore:
+  sha: []
+merge-message-formats: {}

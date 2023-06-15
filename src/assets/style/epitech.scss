@@ -1,0 +1,68 @@
+/**
+ * Solarized Light theme for reveal.js.
+ * Author: Achim Staebler
+ */
+
+// Default mixins and settings -----------------
+@import "./template/mixins";
+@import "./template/settings";
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url(./fonts.scss);
+
+$mainFont: "Roboto", sans-serif;
+$headingFont: "Roboto", sans-serif;
+
+$backgroundColor: #fff;
+
+$epitech: #1251a1;
+
+$mainColor: #000;
+$headingColor: $epitech;
+
+$mainFontSize: 42px;
+$mainFont: "Source Sans Pro", sans-serif;
+$headingFontSize: 10px;
+$headingFont: "Source Sans Pro", sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: $epitech;
+$linkColorHover: lighten($linkColor, 15%);
+$selectionBackgroundColor: lighten($linkColor, 25%);
+
+$heading1Size: 1.5em;
+$heading2Size: 1.2em;
+$heading3Size: 1em;
+$heading4Size: 0.5em;
+
+.logo {
+  height: 52px;
+  margin: 1rem !important;
+}
+
+.author {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  font-size: 1rem;
+}
+
+.reveal .slides .slide-left {
+  text-align: left;
+}
+.reveal .code-wrapper {
+  margin: 0;
+}
+.reveal .hljs {
+  padding: 0.5rem 1rem;
+}
+.reveal .code-wrapper {
+  width: 100%;
+}
+
+// Theme template ------------------------------
+@import "./template/theme";
+// ---------------------------------------------
